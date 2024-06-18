@@ -15,9 +15,9 @@ namespace Q.Tests
         public void TestOne()
         {
             logger.ArrangeSection("Setting up Mobile Test One");
-            string wdioUrl = Common.Get.Parameter("Heroku");
+            string herokuUrl = Common.Get.Parameter("Heroku");
             
-            driver.Navigate().GoToUrl(wdioUrl);
+            driver.Navigate().GoToUrl(herokuUrl);
 
             logger.ActSection("Navigating to the test page");
             navigateToMenu(Navigation.Checkboxes);
