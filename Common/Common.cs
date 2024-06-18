@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using NUnit.Framework;
 
 namespace Q.Common
@@ -24,19 +25,40 @@ namespace Q.Common
 
     public static class Get
     {
-        public static TestContext? TestContext { get; set; }
+        static Get()
+        {
+            LoadParameters();
+        }
+        private static Dictionary<string, string> _parameters;
 
         /// <summary>
-        /// Retrieves a parameter value from the TestContext's parameters collection
+        /// Retrieves a parameter value from the RunSettings file
         /// </summary>
         /// <param name="parameterName">The name of the parameter to retrieve.</param>
         /// <param name="defaultValue">The default value to return if the parameter is not found.</param>
         /// <returns>The parameter value if found; otherwise, the specified default value.</returns>
         public static string Parameter(string parameterName, string defaultValue = "")
         {
-            var value = TestContext.Parameters.Get(parameterName);
-            return value ?? defaultValue;
-        }        
+            return _parameters.TryGetValue(parameterName, out var value) ? value : defaultValue;
+        }
+
+        // Method to load parameters from an XML file
+        private static void LoadParameters()
+        {
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ".RunSettings");
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException($"RunSettings file not found at {filePath}");
+            }
+
+            var doc = XDocument.Load(filePath);
+            // Initialize the _parameters dictionary with values from the XML
+            _parameters = doc.Descendants("Parameter")
+                             .ToDictionary(
+                                 x => (string)x.Attribute("name"),
+                                 x => (string)x.Attribute("value")
+                             );
+        }
     }
 
     public static class Delete

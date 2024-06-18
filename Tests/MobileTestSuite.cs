@@ -1,6 +1,6 @@
 ﻿using Q.PageObjects;
 using Q.Web;
-using static Q.PageObjects.TestPO;
+using static Q.PageObjects.HerokuAppPO;
 using static Q.Web.Q;
 using NUnit.Framework;
 using System.Threading;
@@ -15,16 +15,17 @@ namespace Q.Tests
         public void TestOne()
         {
             logger.ArrangeSection("Setting up Mobile Test One");
-            string wdioUrl = "https://webdriver.io/";
+            string wdioUrl = Common.Get.Parameter("Heroku");
             
             driver.Navigate().GoToUrl(wdioUrl);
 
             logger.ActSection("Navigating to the test page");
-            navigateToMenu(Navigation.whyWdio);
+            navigateToMenu(Navigation.Checkboxes);
 
             logger.AssertSection("Asserting results");
-            bool isUrlCorrect = Wait.UntilUrlToBe("https://webdriver.io/docs/why-webdriverio", 5);
-            Assert.That(isUrlCorrect, Is.True);            
+            string expectedUrl = "https://the-internet.herokuapp.com/checkboxes";
+            bool isUrlCorrect = Wait.UntilUrlToBe(expectedUrl, 5);
+            Assert.That(isUrlCorrect, Is.True, "Url is not correct.");            
         }
     }
 }
