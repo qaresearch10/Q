@@ -430,10 +430,10 @@ namespace Q.Web
 
         internal static void LogEnd(this MethodBase method)
         {
-            Q.logger.Info("");
+            LogEnd(method, "");
         }
 
-        internal static void LogEnd(string method)
+        internal static void LogEnd(this MethodBase method, params object[] args)
         {
             Q.logger.Info("");
         }

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>  
-  <TestRunParameters>
-    <!-- General Test Settings -->
+	<!-- General Test Settings -->
     <Parameter name="Browser" value="Chrome" />
 	<Parameter name="Timeout" value="25" />
-    <Parameter name="Headless" value="true" />
+    <Parameter name="Headless" value="false" />
     <Parameter name="DownloadFolderPath" value="C:\Downloads" />
 	<Parameter name="HubUrl" value="http://localhost:4444/wd/hub" />
 	<Parameter name="RunLocally" value="true" />
@@ -30,39 +29,37 @@
 	<Parameter name="Device" value="iPhone X"/>
 
 	<!-- Appium Settings -->
-	  <Parameter name="platformName" value="Android"/>
-	  <Parameter name="deviceName" value="Pixel-3a-API-34"/>
-	  <Parameter name="platformVersion" value="14"/>
-	  <Parameter name="appPath" value="D:\Downloads\android.wdio.native.app.v1.0.8.apk"/>
-	  <!-- <Parameter name="udid" value="RF8MA3JHSBH"/> -->
-	  <!-- <Parameter name="browserName" value="Chrome"/>-->
-	  <!-- <Parameter name="chromedriverExecutable" value="D:\Dev\chromedriver.exe"/>-->
+	<Parameter name="platformName" value="Android"/>
+	<Parameter name="deviceName" value="Pixel-3a-API-34"/>
+	<Parameter name="platformVersion" value="14"/>
+	<Parameter name="appPath" value="D:\Downloads\android.wdio.native.app.v1.0.8.apk"/>
+	<!-- <Parameter name="udid" value=""/> -->
+	<!-- <Parameter name="browserName" value="Chrome"/>-->
+	<!-- <Parameter name="chromedriverExecutable" value="D:\Dev\chromedriver.exe"/>-->
 	<!-- Browser stack Settings -->
 	<!-- Lambda test Settings -->
 	<!-- Sauce labs Settings -->
 	  
 	<!-- SQL Database credentials -->
-	  <Parameter name="sqlServer" value=""/>
-	  <Parameter name="sqlUsername" value=""/>
-	  <Parameter name="sqlPassword" value=""/>
+	<Parameter name="sqlServer" value=""/>
+	<Parameter name="sqlUsername" value=""/>
+	<Parameter name="sqlPassword" value=""/>
 
 	<!-- No SQL Database credentials -->
-	  <Parameter name="noSqlServer" value=""/>
-	  <Parameter name="noSqlUsername" value=""/>
-	  <Parameter name="noSqlPassword" value=""/>
+	<Parameter name="noSqlServer" value=""/>
+	<Parameter name="noSqlUsername" value=""/>
+	<Parameter name="noSqlPassword" value=""/>
 
 	<!-- Server credentials -->
-	  <Parameter name="server" value=""/>
-	  <Parameter name="domain" value=""/>
-	  <Parameter name="username" value="sa"/>
-	  <Parameter name="password" value=""/>
+	<Parameter name="server" value=""/>
+	<Parameter name="domain" value=""/>
+	<Parameter name="username" value="sa"/>
+	<Parameter name="password" value=""/>
 
 	<!-- App Url -->
-	  <Parameter name="Heroku" value="https://the-internet.herokuapp.com"/>
-	  <Parameter name="Magento" value="https://magento.softwaretestingboard.com"/>
-	  <Parameter name="SauceDemo" value="https://www.saucedemo.com"/>
-	  <Parameter name="Magento" value="https://ultimateqa.com"/>
-	  <Parameter name="Magento" value="https://opensource-demo.orangehrmlive.com"/>
-	
-  </TestRunParameters>
+	<Parameter name="Heroku" value="https://the-internet.herokuapp.com"/>
+	<Parameter name="Magento1" value="https://magento.softwaretestingboard.com"/>	
+	<Parameter name="Magento2" value="https://ultimateqa.com"/>
+	<Parameter name="Magento3" value="https://opensource-demo.orangehrmlive.com"/>
+	<Parameter name="SauceDemo" value="https://www.saucedemo.com"/>
 </RunSettings>

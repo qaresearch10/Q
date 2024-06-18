@@ -7,6 +7,7 @@ namespace Q.Tests
 {
     [TestFixture]
     [Parallelizable(ParallelScope.Children)]
+    //Test for parallel execution
     public class Async
     {       
         [Test]        
