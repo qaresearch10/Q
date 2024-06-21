@@ -18,7 +18,15 @@ namespace Q.PageObjects
             addRemoveElements = By.PartialLinkText("Add/Remove Elements"),
             checkboxes = By.PartialLinkText("Checkboxes"),
             checkbox1 = By.XPath("//form[@id='checkboxes']//input[1]"),
-            checkbox2 = By.XPath("//form[@id='checkboxes']//input[2]")
+            checkbox2 = By.XPath("//form[@id='checkboxes']//input[2]"),
+            dynamicLoadingLink = By.XPath("//li[14]/a"),
+            example1Link = By.PartialLinkText("Example 1"),
+            example2Link = By.PartialLinkText("Example 2"),
+            startButton = By.XPath("//button"),
+            loadingDiv = By.Id("loading"),
+            helloWorldDiv = By.Id("finish"),
+            addElement = By.CssSelector(".example > button"),
+            deleteElement = By.CssSelector(".example div#elements > button")
             ;
         #endregion
 
@@ -26,7 +34,8 @@ namespace Q.PageObjects
         public enum Navigation
         {
             AddRemoveElements,
-            Checkboxes
+            Checkboxes,
+            DynamicLoadingLink
         }
 
         #region Methods
@@ -44,7 +53,11 @@ namespace Q.PageObjects
                 case Navigation.Checkboxes:
                     checkboxes.Click();
                     break;
+                case Navigation.DynamicLoadingLink:
+                    dynamicLoadingLink.Click();
+                    break;
             }
+            driver.WaitForPageToLoad();
         }
     }
     #endregion

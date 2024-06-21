@@ -19,13 +19,7 @@ namespace Q.PageObjects
             whyWdioLink = By.XPath("//div[@class=\"buttons_pzbO\"]/a[2]"),
             navButtons = By.XPath("//div[@class='buttons_pzbO']"),
             searchB = By.CssSelector(".navbarSearchContainer_Bca1 button"),
-            searchI = By.CssSelector("form input"),
-
-            dynamicLoadingLink = By.XPath("//li[14]/a"),
-            example2Link = By.PartialLinkText("Example 2"),
-            startButton = By.XPath("//button"),
-            loadingDiv = By.Id("loading"),
-            helloWorldDiv = By.Id("finish")
+            searchI = By.CssSelector("form input")            
             ;
         #endregion
 

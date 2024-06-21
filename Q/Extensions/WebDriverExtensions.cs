@@ -129,6 +129,16 @@ namespace Q.Web
             return false;
         }
 
+        /// <summary>
+        /// Waits for the web page loading to complete
+        /// </summary>       
+        /// <param name="timeout">The maximum time to wait for the page loading to complete, in seconds.</param>
+        public static void WaitForPageToLoad(this IWebDriver driver, int timeout = Timeout)
+        {
+            new WebDriverWait(driver, TimeSpan.FromSeconds(timeout))
+                .Until(drv => (drv as IJavaScriptExecutor).ExecuteScript("return document.readyState").Equals("complete"));
+        }
+
         private static void WaitForAnimationToComplete(IWebDriver driver, By locator, int timeout = Timeout)
         {
             IWebElement element = driver.FindElement(locator, timeout);
@@ -158,12 +168,6 @@ namespace Q.Web
         {
             new WebDriverWait(driver, TimeSpan.FromSeconds(timeout))
                 .Until(ElementToBeClickable(element));
-        }
-
-        private static void WaitForPageToLoad(IWebDriver driver, int timeout)
-        {
-            new WebDriverWait(driver, TimeSpan.FromSeconds(timeout))
-                .Until(drv => (drv as IJavaScriptExecutor).ExecuteScript("return document.readyState").Equals("complete"));
         }
 
         /// <summary>

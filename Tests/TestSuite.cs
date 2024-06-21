@@ -1,9 +1,9 @@
 using OpenQA.Selenium;
 using Q.PageObjects;
+using static Q.PageObjects.HerokuAppPO;
 using Q.Web;
 using static Q.Web.Q;
-using static Q.PageObjects.TestPO;
-using static Q.PageObjects.HerokuAppPO;
+using Q.Common;
 
 namespace Q.Tests
 {
@@ -12,92 +12,126 @@ namespace Q.Tests
     public class TestSuite : BaseTest
     {
         [Test]
-        public void TestZero()
+        public void SelectUnselectCheckboxes()
         {
-            logger.ArrangeSection("Navigating to the Home page.");
-            string wdioUrl = "https://the-internet.herokuapp.com";
+            logger.ArrangeSection("Setting up the Test SelectUnselectCheckboxes.");
+            string wdioUrl = Get.Parameter("Heroku");
+
             driver.Navigate().GoToUrl(wdioUrl);
+            string text = checkboxes.Get().ElementText();
 
-            logger.ActSection("Clicking on the Checkboxes button");
-            string text = HerokuAppPO.checkboxes.Get().ElementText();            
-            
-            navigateToMenu(HerokuAppPO.Navigation.Checkboxes);
+            logger.ActSection("Navigating to the test page.");            
+            navigateToMenu(Navigation.Checkboxes);
 
-            IWebElement el1 = driver.FindElement(checkbox1);
-            IWebElement el2 = driver.FindElement(checkbox2);
+            logger.ActSection("Unselecting Checkboxes.");
+            IWebElement el1 = driver.FindElement(checkbox1, 5);
+            IWebElement el2 = driver.FindElement(checkbox2, 5);
+
+            //checkbox1.UnSelect();
+            //checkbox1.Is().Selected();
+            //can be done as well
 
             el1.UnSelect();
             el2.UnSelect();
 
-            bool checkbox1Selected = el1.Is().NotSelected();
-            bool checkbox2Selected = el2.Is().NotSelected();
+            bool checkbox1NotSelected = el1.Is().NotSelected();
+            bool checkbox2NotSelected = el2.Is().NotSelected();
 
-            //Thread.Sleep(1000);
+            logger.ActSection("Selecting Checkboxes.");
+            el1.Select();
+            el2.Select();
+
+            bool checkbox1Selected = el1.Is().Selected();
+            bool checkbox2Selected = el2.Is().Selected();
+
+            logger.AssertSection("Asserting results.");
             Assert.Multiple(() =>
-            {                
-                Assert.That(checkbox1Selected, Is.True);
-                Assert.That(checkbox2Selected, Is.True);
+            {
+                Assert.That(checkbox1NotSelected, Is.True, "Checkbox 1 is selected.");
+                Assert.That(checkbox2NotSelected, Is.True, "Checkbox 2 is selected.");
+                Assert.That(checkbox1Selected, Is.True, "Checkbox 1 is not selected.");
+                Assert.That(checkbox2Selected, Is.True, "Checkbox 2 is not selected.");
                 Assert.That(text.Equals("Checkboxes"), Is.True);
             });           
+        }        
+
+        [Test]
+        public void AddRemoveElements()
+        {
+            logger.ArrangeSection("Setting up the Test ddRemoveElements.");
+            string url = Common.Get.Parameter("Heroku");
+
+            driver.Navigate().GoToUrl(url);
+
+            logger.ActSection("Navigating to the test page.");
+            navigateToMenu(Navigation.AddRemoveElements);
+
+            logger.ActSection("Adding and Deleting element.");
+            addElement.Click();
+            bool isDeleteButtonVisible = deleteElement.Is().Visible();
+            deleteElement.Click();
+            bool isDeleteButtonNotVisible = deleteElement.Is().NotVisible();
+
+            logger.AssertSection("Asserting results.");
+            Assert.Multiple(() =>
+            {
+                Assert.That(isDeleteButtonVisible, Is.True, "Delete button is not visible.");
+                Assert.That(isDeleteButtonNotVisible, Is.True, "Delete button is still visible.");
+            });
         }
 
         [Test]
-        [Ignore("")]
-        public void TestOne()
+        public void DynamicLoading1()
         {
-            string wdioUrl = "https://webdriver.io/";
+            logger.ArrangeSection("Setting up the Test DynamicLoading2");
+            string url = Common.Get.Parameter("Heroku");
 
-            driver.Navigate().GoToUrl(wdioUrl);
-
-            //search("Alex");
-            string buttonText = getStartedLink.Get().ElementText();
-            string attribute = getStartedLink.Get().Attribute("class");
-            string cssValue = getStartedLink.Get().CssValue("font-weight");
-            bool isVisible = getStartedLink.Wait().UntilElementIsVisible();
-
-            navigateToMenu(TestPO.Navigation.getStarted);
-            assumeUrl("https://webdriver.io/docs/gettingstarted");
-        }
-
-        [Test]
-        public void TestTwo()
-        {
-            logger.ArrangeSection("Setting up the Test Two");
-            string wdioUrl = "https://webdriver.io/";
-            string expectedUrl = "https://webdriver.io/docs/why-webdriverio";
-
-            //Interceptor interceptor = new Interceptor(driver);
-            //await interceptor.InterceptAsync();
-            By locator = By.Id("Test");
-            
-            driver.Navigate().GoToUrl(wdioUrl);
+            driver.Navigate().GoToUrl(url);
 
             logger.ActSection("Navigating to the test page");
-            navigateToMenu(TestPO.Navigation.whyWdio);
+            navigateToMenu(Navigation.DynamicLoadingLink);
 
-            
+            logger.ActSection("Selecting Start.");
+            example1Link.Click();
+            startButton.Click();
+
             logger.AssertSection("Asserting results");
-            //assumeUrl(expectedUrl);
-            bool isUrlCorrect = Wait.UntilUrlToBe(expectedUrl, 10);
-            Assert.That(isUrlCorrect, Is.True, $"Expected URL: {expectedUrl} but was ...");
+            string expectedText = "Hello World!";
+            bool isHelloWorldVisible = helloWorldDiv.Is().Visible();
+            string actualText = helloWorldDiv.Get().ElementText();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(isHelloWorldVisible, Is.True, "'Hello World' is not visible.");
+                Assert.That(actualText, Is.EqualTo(expectedText), "The text is not correct.");
+            });
         }
 
         [Test]        
-        public void TestThree()
+        public void DynamicLoading2()
         {
-            logger.ArrangeSection("Setting up the Test Three");
-            string url = "https://the-internet.herokuapp.com/?ref=hackernoon.com";
+            logger.ArrangeSection("Setting up the Test DynamicLoading2");
+            string url = Common.Get.Parameter("Heroku");
                   
             driver.Navigate().GoToUrl(url);
             
             logger.ActSection("Navigating to the test page");
-            dynamicLoadingLink.Click();
+            navigateToMenu(Navigation.DynamicLoadingLink);
+
+            logger.ActSection("Selecting Start.");
             example2Link.Click();
             startButton.Click();
 
             logger.AssertSection("Asserting results");
-            bool isVisible = helloWorldDiv.Wait().UntilElementIsVisible();
-            Assert.That(isVisible, Is.True);
+            string expectedText = "Hello World!";
+            bool isHelloWorldVisible = helloWorldDiv.Is().Visible();
+            string actualText = helloWorldDiv.Get().ElementText();
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(isHelloWorldVisible, Is.True, "'Hello World' is not visible.");
+                Assert.That(actualText, Is.EqualTo(expectedText), "The text is not correct.");
+            });            
         }
     }    
 }
