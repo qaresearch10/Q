@@ -9,7 +9,7 @@ namespace Q.Tests
 {
     [TestFixture]
     [Parallelizable(ParallelScope.Self)]
-    public class TestSuite : BaseTest
+    public class HerokuTestSuite : BaseTest
     {
         [Test]
         public void SelectUnselectCheckboxes()
@@ -132,6 +132,31 @@ namespace Q.Tests
                 Assert.That(isHelloWorldVisible, Is.True, "'Hello World' is not visible.");
                 Assert.That(actualText, Is.EqualTo(expectedText), "The text is not correct.");
             });            
+        }
+
+        [Test]
+        public void BasicAuth()
+        {
+            logger.ArrangeSection("Setting up the Test DynamicLoading2");
+            string username = "admin";
+            string password = "admin";
+            string url = $"https://{username}:{password}@the-internet.herokuapp.com/basic_auth";
+            driver.Navigate().GoToUrl(url);            
+
+            logger.AssertSection("Asserting results");
+            bool isTitleVisible = contentTitle.Is().Visible();
+            bool isTextVisible = contentText.Is().Visible();
+            string title = contentTitle.Get().ElementText();
+            string text = contentText.Get().ElementText();
+            
+            Assert.Multiple(() =>
+            {
+                Assert.That(isTitleVisible, Is.True, "Title is not visible.");
+                Assert.That(isTextVisible, Is.True, "Text is not visible.");
+                Assert.That(title, Is.EqualTo("Basic Auth"), "Title is not correct.");
+                Assert.That(text, Is.EqualTo("Congratulations! You must have the proper credentials."), "Text is not correct.");
+
+            });
         }
     }    
 }

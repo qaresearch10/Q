@@ -17,9 +17,12 @@ namespace Q.PageObjects
         public static By
             addRemoveElements = By.PartialLinkText("Add/Remove Elements"),
             checkboxes = By.PartialLinkText("Checkboxes"),
-            checkbox1 = By.XPath("//form[@id='checkboxes']//input[1]"),
-            checkbox2 = By.XPath("//form[@id='checkboxes']//input[2]"),
             dynamicLoadingLink = By.XPath("//li[14]/a"),
+            basicAuth = By.PartialLinkText("Basic Auth"),
+            contentTitle = By.CssSelector("#content  h3"),
+            contentText = By.CssSelector("#content  p"),
+            checkbox1 = By.XPath("//form[@id='checkboxes']//input[1]"),
+            checkbox2 = By.XPath("//form[@id='checkboxes']//input[2]"),            
             example1Link = By.PartialLinkText("Example 1"),
             example2Link = By.PartialLinkText("Example 2"),
             startButton = By.XPath("//button"),
@@ -35,7 +38,8 @@ namespace Q.PageObjects
         {
             AddRemoveElements,
             Checkboxes,
-            DynamicLoadingLink
+            DynamicLoadingLink,
+            BasicAuth
         }
 
         #region Methods
@@ -49,6 +53,9 @@ namespace Q.PageObjects
             {
                 case Navigation.AddRemoveElements:
                     addRemoveElements.Click();
+                    break;
+                case Navigation.BasicAuth:
+                    basicAuth.Click();
                     break;
                 case Navigation.Checkboxes:
                     checkboxes.Click();
