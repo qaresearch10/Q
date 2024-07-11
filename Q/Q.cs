@@ -17,14 +17,12 @@ namespace Q.Web
         public static IWebDriver driver;
         public static Logging logger = new Logging();
 
-        //To do: Create Accept, Dismiss, Send Keys Alert methods
-
+        // To do: 
+        // Create Accept, Dismiss, Send Keys Alert methods
         // public static IWebElement CurrentlyFocusedElement()
         // public static string NodeIP()
         // public static void UntilAjaxComplete(int timeout)
-        // public static void WaitForPageToLoad
-        // public static void DragAndDrop(IWebElement source, IWebElement target)
-        // public static void DragAndDrop(By source, By target, int timeout)
+        // public static void WaitForPageToLoad() 
         // public static void SendKeyboardKeys(int timeout, params Keyboard.Key[] KeysToCHORD)
         // public static void SwitchToIFrame(By bylocator, int timeout)
         // public static void SwitchToIFrame(string FrameNameOrID, int timeout)
@@ -86,7 +84,6 @@ namespace Q.Web
         {
             return By.XPath("//*[text()='" + text + "']");
         }
-
 
         public static By SomeValue(string value)
         {

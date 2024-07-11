@@ -8,11 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium.Support.UI;
 using OpenQA.Selenium.Interactions;
-using System.Xml.Linq;
-using System.Runtime.ConstrainedExecution;
 using static Q.Web.Q;
-using System.Threading;
-using SeleniumExtras.WaitHelpers;
 
 namespace Q.Web
 {
@@ -42,6 +38,40 @@ namespace Q.Web
         {
             return new WebElementAssert(element);
         }
+        
+        /// <summary>
+        /// Performs a drag-and-drop action from the source element to the target element within the specified timeout period.
+        /// </summary>
+        /// <param name="source">The source IWebElement.</param>
+        /// <param name="target">The target IWebElement.</param>
+        /// <param name="timeout">The maximum time to wait for the elements to be interactable, in seconds.</param>
+        public static void DragAndDrop(this IWebElement source, IWebElement target, int timeout = Timeout)
+        {
+            // Perform the drag-and-drop action
+            TryCatchSimple(() =>
+            {
+                Actions actions = new Actions(driver);
+                actions.DragAndDrop(source, target).Perform();                
+            });
+        }
+
+        /// <summary>
+        /// Performs a drag-and-drop action from the source element to the target element within the specified timeout period.
+        /// </summary>
+        /// <param name="source">The source IWebElement.</param>
+        /// <param name="target">The locator of the target element.</param>
+        /// <param name="timeout">The maximum time to wait for the elements to be interactable, in seconds.</param>
+        public static void DragAndDrop(this IWebElement source, By target, int timeout = Timeout)
+        {          
+            IWebElement targetElement = GetElementEnabled(target, timeout);
+
+            // Perform the drag-and-drop action
+            TryCatchSimple(() =>
+            {
+                Actions actions = new Actions(driver);
+                actions.DragAndDrop(source, targetElement).Perform();                
+            });
+        }        
 
         /// <summary>
         /// Selects the element identified by a predefined locator within the specified timeout period.         
@@ -330,7 +360,6 @@ namespace Q.Web
                 ((IJavaScriptExecutor)Q.driver).ExecuteScript($"window.scrollBy({x}, {y});");
             });
         }
-
 
         private static void WaitForElementToBeEnabled(IWebElement element, int timeout = Timeout)
         {

@@ -46,6 +46,43 @@ namespace Q.Web
         }
 
         /// <summary>
+        /// Performs a drag-and-drop action from the source element to the target element within the specified timeout period.
+        /// </summary>
+        /// <param name="source">The locator of the source element.</param>
+        /// <param name="target">The locator of the target element.</param>
+        /// <param name="timeout">The maximum time to wait for the elements to be interactable, in seconds.</param>
+        public static void DragAndDrop(this By source, By target, int timeout = Timeout)
+        {            
+            IWebElement sourceElement = GetElementEnabled(source, timeout);
+            IWebElement targetElement = GetElementEnabled(target, timeout);
+
+            // Perform the drag-and-drop action
+            TryCatchSimple(() =>
+            {
+                Actions actions = new Actions(driver);
+                actions.DragAndDrop(sourceElement, targetElement).Perform();                
+            });            
+        }
+
+        /// <summary>
+        /// Performs a drag-and-drop action from the source element to the target element within the specified timeout period.
+        /// </summary>
+        /// <param name="source">The locator of the source element.</param>
+        /// <param name="target">The target IWebElement.</param>
+        /// <param name="timeout">The maximum time to wait for the elements to be interactable, in seconds.</param>
+        public static void DragAndDrop(this By source, IWebElement target, int timeout = Timeout)
+        {
+            IWebElement sourceElement = GetElementEnabled(source, timeout);
+
+            // Perform the drag-and-drop action
+            TryCatchSimple(() =>
+            {
+                Actions actions = new Actions(driver);
+                actions.DragAndDrop(sourceElement, target).Perform();                
+            });
+        }
+
+        /// <summary>
         /// Selects the element identified by a predefined locator within the specified timeout period.         
         /// </summary>        
         /// <param name="timeout">The maximum time to wait for the element to be enabled, in seconds.</param>        
